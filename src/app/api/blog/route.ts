@@ -4,15 +4,15 @@ import blogModel from "../../../../models/blog";
 
 export async function POST(req: Request) {
     try{
-        const {topic, description} = await req.json();
-        if(!topic || !description){
+        const {topic, article} = await req.json();
+        if(!topic || !article){
             return NextResponse.json(
                 {message: "You cant submit an empty field"},
                 {status: 400}
             )
         };
         await connDB();
-        await blogModel.create({topic, description});
+        await blogModel.create({topic, article});
     
         return NextResponse.json({message: "Topic Created"}, {status: 200});
     } catch(error){

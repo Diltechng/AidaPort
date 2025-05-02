@@ -14,7 +14,6 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import GithubProfile from "../functions/components/styledComponents/Git";
 import GitHubRepos from "../functions/components/styledComponents/Git";
 import Link from "next/link";
 

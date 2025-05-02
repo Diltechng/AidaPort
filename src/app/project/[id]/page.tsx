@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import Link from "next/link";
 import ContentSidebar from "../../functions/components/styledComponents/ContentSidebar";
 import SliderBox from "../../functions/Slider";
-import { btn, primaryBg } from "../../functions/components/styledComponents/styled";
 import { FaEllipsisV, FaLink, FaTimes, FaSpinner, FaCalendarAlt, FaUserTie, FaCode } from "react-icons/fa";
 import { useFilebar } from "../../context/FilebarContext";
 import { useEffect, useState } from "react";

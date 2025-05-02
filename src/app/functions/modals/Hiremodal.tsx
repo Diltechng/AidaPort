@@ -2,12 +2,7 @@ import { FiMail, FiFileText, FiCheckCircle } from "react-icons/fi";
 import { btn } from "../components/styledComponents/styled";
 
 export const Hiremodal: React.FC = () => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Add form submission logic here
-    alert("Thank you for your interest! I'll get back to you soon.");
-  };
-
+  
   return (
       <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md">
         <div className="text-center mb-6">
@@ -15,7 +10,7 @@ export const Hiremodal: React.FC = () => {
           <p className="text-gray-600">Fill out this short form and I will get back to you within 24 hours</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form className="space-y-5 text-gray-600" action={"https://formsubmit.co/diltechng@gmail.com"} method="POST" target="blank">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FiMail className="text-gray-400" />

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connDB } from "../../../../../libs/mongodb";
 import blogModel from "../../../../../models/blog";
 
@@ -19,12 +19,20 @@ export async function PUT(req: Request, {params}){
     }
 }
 
-export async function GET(req: Request, {params}){
+export async function GET(req: NextRequest, {params} : {params: {id: string}}){
+    
     try{
         await connDB();
-        const {id} = params;
-        const blog = await blogModel.findOne({_id: id});
-        return NextResponse.json({blog}, {status: 200});
+        const blogId = params.id;
+        console.log(blogId)
+        if(!blogId){
+            return NextResponse.json({message: "Missing blog ID"}, {status: 400});
+        }
+        const post = await blogModel.findById(blogId);
+        if(!post){
+            return NextResponse.json({message: "Blog not found"}, {status: 404});
+        }
+        return NextResponse.json({post}, {status: 200});
     }catch(err){
         console.error("can not get", err);
         return NextResponse.json({message: "can not get blog"}, {status: 400});

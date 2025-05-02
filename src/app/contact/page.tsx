@@ -2,9 +2,10 @@ import { btn } from "../functions/components/styledComponents/styled";
 
 export default function Contact (){
     return(
-        <div className="flex flex-col items-center justify-center min-h-screen backdrop-blur-md">
+        <section className="min-h-screen w-full overflow-x-hidden flex-grow flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <h1 className="text-4xl font-bold mb-6">Contact Me</h1>
-            <form className="bg-white p-6 rounded-lg shadow-md w-full max-w-md text-gray-700">
+            <h1 className="text-3xl font-bold mb-6">You are sending directly to my Mailbox</h1>
+            <form className="bg-white p-6 rounded-lg shadow-md w-full max-w-md text-gray-700" action={"https://formsubmit.co/diltechng@gmail.com"} method="POST" target="blank">
             <div className="mb-4">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
                 <input 
@@ -40,6 +41,6 @@ export default function Contact (){
                 Submit
             </button>
             </form>
-        </div>
+        </section>
     )
 }

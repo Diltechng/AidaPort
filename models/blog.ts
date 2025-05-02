@@ -2,9 +2,11 @@ import mongoose, {Schema, Model, Document} from "mongoose";
 
 interface blog extends Document{
     topic: string;
-    description: string;
+    article: string;
     createdAt?: Date;
     updatedAt?: Date;
+    images: [],
+
 }
 const blogSchema = new Schema<blog>(
     {
@@ -12,11 +14,12 @@ const blogSchema = new Schema<blog>(
             type:String,
             required: true,
         },
-        description: {
+        article: {
             type: String,
             required: true
         },
-       
+        images: [{ type: String }],
+
     },
     {
         timestamps: true

@@ -1,8 +1,8 @@
 "use client";
 import { useRef } from 'react';
-import { FaToolbox, FaFileDownload, FaMapPin, FaHandshake } from "react-icons/fa";
+import { FaToolbox, FaFileDownload, FaMapPin, FaHandshake, FaNode } from "react-icons/fa";
 import { RiNextjsLine, RiTailwindCssFill } from "react-icons/ri";
-import { TbBrandFramerMotion, TbBrandTypescript } from "react-icons/tb";
+import { TbBrandFramerMotion, TbBrandMongodb, TbBrandTypescript } from "react-icons/tb";
 import { useModal } from "../context/ModalContext";
 import vector1 from "../image/afro-man-standing-drinking-beverage-character.png";
 import Image from "next/image";
@@ -47,7 +47,9 @@ export default function Hero() {
     { icon: <TbBrandTypescript size={40} />, color: "text-cyan-700", name: "TypeScript" },
     { icon: <RiNextjsLine size={40} />, color: "text-black", name: "Next.js" },
     { icon: <RiTailwindCssFill size={40} />, color: "text-cyan-600", name: "Tailwind CSS" },
-    { icon: <TbBrandFramerMotion size={40} />, color: "text-pink-500", name: "Framer Motion" }
+    { icon: <TbBrandFramerMotion size={40} />, color: "text-pink-500", name: "Framer Motion" },
+    {icon: <FaNode size={40} />, color: "text-green-600", name: "Node.js" },
+    {icon: <TbBrandMongodb size={40} />, color: "text-green-700", name: "MongoDB" },
   ];
 
   if (isInView) {
@@ -152,20 +154,21 @@ export default function Hero() {
         <h2 className="text-xl text-slate-100 font-bold flex items-center gap-2 mb-3">
           <FaToolbox className="text-yellow-400"/> Crafted With
         </h2>
-        <ul className="w-full grid grid-cols-4 justify-items-center gap-4 px-4">
+        <ul className="w-full grid grid-cols-6 justify-items-center gap-4 px-4">
           {techIcons.map((tech, index) => (
             <motion.li 
               key={index}
-              className={`${tech.color} flex flex-col items-center`}
+              className={`${tech.color} flex flex-col items-center content-center`}
               whileHover={{ y: -5 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              {tech.icon}
-              <span className="text-xs text-gray-300 mt-1">{tech.name}</span>
+             <span>{tech.icon}</span> 
+              <span className="text-xs text-gray-300 mt-1 text-center">{tech.name}</span>
             </motion.li>
           ))}
         </ul>
       </motion.div>
+      
     </section>
   );
 }

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { FaCalendar, FaFolder, FaSpinner } from "react-icons/fa";
+import { FaCalendar, FaFolder } from "react-icons/fa";
 import { TbMoodEmptyFilled } from "react-icons/tb";
 import { motion } from "framer-motion";
 import img from "../image/open-book-7203077_1280.png";
@@ -108,7 +108,7 @@ export default function ProjectPage() {
         >
           <TbMoodEmptyFilled className="text-5xl text-gray-400 mb-4" />
           <h2 className="text-xl font-semibold text-gray-800">No Projects Found</h2>
-          <p className="text-gray-600 mt-2">You haven't created any projects yet.</p>
+          <p className="text-gray-600 mt-2">You haven&#39;t created any projects yet.</p>
         </motion.div>
       )}
 

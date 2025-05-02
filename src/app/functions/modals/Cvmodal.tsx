@@ -1,4 +1,4 @@
-import { FaDownload, FaLinkedin, FaPhone, FaEnvelope, FaLink } from "react-icons/fa";
+import { FaDownload, FaLinkedin, FaPhone, FaEnvelope} from "react-icons/fa";
 import { FiAward, FiBook, FiCode, FiGlobe, FiHeart, FiLink } from "react-icons/fi";
 import { btn } from "../components/styledComponents/styled";
 

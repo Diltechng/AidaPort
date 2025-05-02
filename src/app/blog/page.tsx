@@ -1,82 +1,199 @@
-import Image, { StaticImageData } from "next/image";
-import { FaBlog, FaCalendarAlt } from "react-icons/fa";
+'use client';
+import Image from "next/image";
+import { FaBlog, FaCalendarAlt, FaArrowRight, FaExclamationTriangle } from "react-icons/fa";
 import img from "../image/afro-man-standing-drinking-beverage-character.png";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function BlogPage() {
     type BlogProps = {
-        id: number;
-        title: string;
-        content: string;
-        date: string;
-        img: StaticImageData;
+        _id: string;
+        topic: string;
+        article: string;
+        createdAt?: string;
+        images: string[];
+        updatedAt?: string;
     }
+    
+    const [blogs, setBlogs] = useState<BlogProps[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    const blogs: BlogProps[] = [
-        { id: 0, title: 'The Art of Mindful Productivity', content: 'Discover how mindfulness can transform your work habits and boost efficiency without burnout.', date: 'May 15, 2023', img: img },
-        { id: 1, title: 'Sustainable Living in Urban Spaces', content: 'Practical tips for reducing your carbon footprint while living in the heart of the city.', date: 'June 2, 2023', img: img },
-        { id: 2, title: 'The Future of Remote Work', content: 'Exploring how distributed teams are reshaping company cultures and work-life balance.', date: 'June 18, 2023', img: img },
-        { id: 3, title: 'Culinary Adventures: Street Food Edition', content: 'A gastronomic journey through the vibrant street food scenes of Southeast Asia.', date: 'July 5, 2023', img: img },
-        { id: 4, title: 'Minimalism: More Than Just Aesthetic', content: 'How embracing minimalism can lead to greater mental clarity and financial freedom.', date: 'August 12, 2023', img: img },
-        { id: 5, title: 'Digital Detox: Reclaiming Your Attention', content: 'Strategies for breaking free from constant digital stimulation and rediscovering focus.', date: 'September 3, 2023', img: img },
-        { id: 6, title: 'Urban Gardening for Beginners', content: 'Turn your balcony into a thriving garden with these easy-to-follow tips and tricks.', date: 'September 22, 2023', img: img },
-        { id: 7, title: 'The Psychology of Color in Marketing', content: 'How color choices influence consumer behavior and brand perception.', date: 'October 10, 2023', img: img },
-        { id: 8, title: 'Financial Independence for Creatives', content: 'Building sustainable income streams while pursuing your artistic passions.', date: 'November 5, 2023', img: img },
-        { id: 9, title: 'Travel Hacks: Packing Light Edition', content: 'How to travel anywhere for any duration with just a carry-on bag.', date: 'December 1, 2023', img: img },
-    ]
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
+                const res = await fetch("/api/blog", { cache: "no-store" });
+                if (!res.ok) throw new Error(`Failed to load blogs. Status: ${res.status}`);
+                const data = await res.json();
+                if (!data.post) throw new Error("No blog data received");
+                setBlogs(data.post);
+            } catch (err) {
+                console.error("Failed to fetch blogs:", err);
+                setError(err instanceof Error ? err.message : "An unknown error occurred");
+                setBlogs([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchBlogs();
+    }, []);
+
+    const formatDate = (dateString?: string) => {
+        if (!dateString) return "Unknown date";
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
+    // Animation variants
+    const container = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    };
+
+    const item = {
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    };
 
     return (
-        <section className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-full mb-4">
-                        <FaBlog className="text-indigo-600 text-2xl" />
+        <section className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-6xl mx-auto">
+                {/* Header with animation */}
+                <motion.div 
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-16"
+                >
+                    <motion.div 
+                        whileHover={{ scale: 1.05 }}
+                        className="inline-flex items-center justify-center w-20 h-20 bg-indigo-100 rounded-full mb-6 shadow-lg"
+                    >
+                        <FaBlog className="text-indigo-600 text-3xl" />
+                    </motion.div>
+                    <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                        My Blog Posts
+                    </h1>
+                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Explore my thoughts, stories and creative ideas
+                    </p>
+                </motion.div>
+
+                {/* Error state */}
+                {error && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-8 p-4 rounded-lg bg-red-50 border border-red-200 text-red-600 flex items-center"
+                    >
+                        <FaExclamationTriangle className="mr-3 flex-shrink-0" />
+                        <div>
+                            <h3 className="font-medium">Couldn&#39;t load blogs</h3>
+                            <p>{error}</p>
+                        </div>
+                    </motion.div>
+                )}
+
+                {/* Loading state with inline skeletons */}
+                {isLoading && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {[...Array(4)].map((_, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                                className="h-full rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-100"
+                            >
+                                <div className="relative h-48 w-full overflow-hidden bg-gray-200 animate-pulse"></div>
+                                <div className="p-6">
+                                    <div className="h-7 bg-gray-200 rounded-full animate-pulse mb-4 w-3/4"></div>
+                                    <div className="space-y-3">
+                                        <div className="h-4 bg-gray-200 rounded-full animate-pulse"></div>
+                                        <div className="h-4 bg-gray-200 rounded-full animate-pulse w-5/6"></div>
+                                        <div className="h-4 bg-gray-200 rounded-full animate-pulse w-2/3"></div>
+                                    </div>
+                                    <div className="mt-6 h-4 bg-gray-200 rounded-full animate-pulse w-1/3"></div>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
-                    <h1 className="text-4xl font-bold mb-2">My Blog Posts</h1>
-                    <p className="text-lg text-gray-600">Thoughts, stories and ideas</p>
-                </div>
+                )}
+
+                {/* Empty state */}
+                {!isLoading && blogs.length === 0 && !error && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="text-center py-16"
+                    >
+                        <div className="text-6xl mb-4">📭</div>
+                        <h3 className="text-2xl font-medium text-gray-700 mb-2">No articles yet</h3>
+                        <p className="text-gray-500">Check back later for new posts</p>
+                    </motion.div>
+                )}
 
                 {/* Blog List */}
-                <div className="space-y-8">
-                    {blogs.map(({ id, title, content, date, img }) => (
-                        <Link 
-                            href={`/blog/${id}`}
-                            key={id}
-                            className="group block overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 bg-white"
-                        >
-                            <div className="md:flex">
-                                <div className="md:flex-shrink-0 md:w-48 relative h-48 md:h-auto">
-                                    <Image
-                                        src={img}
-                                        alt={title}
-                                        fill
-                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                                        sizes="(max-width: 768px) 100vw, 20vw"
-                                        placeholder="blur"
-                                    />
-                                </div>
-                                <div className="p-6">
-                                    <div className="flex items-center text-sm text-gray-500 mb-2">
-                                        <FaCalendarAlt className="mr-1.5" />
-                                        <span>{date}</span>
+                {!isLoading && blogs.length > 0 && (
+                    <motion.div
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="grid grid-cols-1 md:grid-cols-2 gap-8"
+                    >
+                        {blogs.map(({ _id, topic, article, images, createdAt }) => (
+                            <motion.div 
+                                key={_id}
+                                variants={item}
+                                whileHover={{ y: -5 }}
+                                className="h-full"
+                            >
+                                <Link 
+                                    href={`/blog/${_id}`}
+                                    className="group block h-full rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white border border-gray-100"
+                                >
+                                    <div className="relative h-48 w-full overflow-hidden">
+                                        <Image
+                                            src={images[0] || img}
+                                            alt={topic}
+                                            fill
+                                            className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            placeholder="blur"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                        <div className="absolute bottom-4 left-4">
+                                            <div className="flex items-center text-sm text-white/90">
+                                                <FaCalendarAlt className="mr-2" />
+                                                <span>{formatDate(createdAt)}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h2 className="text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">
-                                        {title}
-                                    </h2>
-                                    <p className="text-gray-600 mb-4 line-clamp-2">
-                                        {content}
-                                    </p>
-                                    <div className="text-indigo-600 font-medium group-hover:text-indigo-800 transition-colors">
-                                        Read more →
+                                    <div className="p-6">
+                                        <h2 className="text-2xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors mb-3 line-clamp-2">
+                                            {topic}
+                                        </h2>
+                                        <p className="text-gray-600 mb-4 line-clamp-3">
+                                            {article}
+                                        </p>
+                                        <div className="flex items-center text-indigo-600 font-medium group-hover:text-indigo-800 transition-colors">
+                                            Read more
+                                            <FaArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-
-                {/* Pagination would go here */}
+                                </Link>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                )}
             </div>
         </section>
     )

@@ -1,5 +1,4 @@
 'use client';
-import Link from "next/link";
 import {motion} from "framer-motion";
 import { useRouter } from "next/navigation";
 import ContentSidebar from "../functions/components/styledComponents/ContentSidebar"
