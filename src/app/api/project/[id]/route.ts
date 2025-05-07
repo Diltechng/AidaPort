@@ -28,17 +28,17 @@ export async function PUT(req: Request,{params}){
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connDB();
-    const projectId = params.id;
+    const {id} = await params;
 
-    if (!projectId) {
+    if (!id) {
       return NextResponse.json({ message: "Missing project ID" }, { status: 400 });
     }
 
-    const project = await projectModel.findById(projectId);
+    const project = await projectModel.findById(id);
 
     if (!project) {
       return NextResponse.json({ message: "Project not found" }, { status: 404 });
