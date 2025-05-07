@@ -19,8 +19,9 @@ export async function PUT(req: Request, {params}){
     }
 }
 
-export async function GET(req: NextRequest, {params} : {params: {id: string}}){
-    const {id} = await params;
+export async function GET(req: NextRequest, context : {params: {id: string}}){
+    const {id} = await context.params;
+    console.log(id)
     try{
         await connDB();
         
