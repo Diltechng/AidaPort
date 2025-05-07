@@ -18,8 +18,16 @@ export async function PUT(req: Request, {params}){
        return NextResponse.json({message: "something went wrong"}, {status: 400});
     }
 }
-
-export async function GET(req: NextRequest, {params} : {params: {id: string}}){
+interface RouteParams {
+    id: string;
+  }
+interface RouteContext {
+    params: RouteParams;
+  }
+export async function GET(
+    request: NextRequest,
+    { params }: RouteContext
+  ): Promise<NextResponse>{
     const {id} = await params;
     try{
         await connDB();
