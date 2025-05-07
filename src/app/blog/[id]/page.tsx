@@ -81,8 +81,7 @@ export default function BlogPage() {
             {/* Content skeleton */}
             <div className="space-y-3">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" 
-                  style={{ width: `${Math.random() * 30 + 70}%` }}></div>
+                <div key={i} className="h-4 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
               ))}
             </div>
             

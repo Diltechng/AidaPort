@@ -20,15 +20,15 @@ export async function PUT(req: Request, {params}){
 }
 
 export async function GET(req: NextRequest, {params} : {params: {id: string}}){
-    
+    const {id} = await params;
     try{
         await connDB();
-        const blogId = params.id;
-        console.log(blogId)
-        if(!blogId){
+        
+        console.log(id)
+        if(!id){
             return NextResponse.json({message: "Missing blog ID"}, {status: 400});
         }
-        const post = await blogModel.findById(blogId);
+        const post = await blogModel.findById(id);
         if(!post){
             return NextResponse.json({message: "Blog not found"}, {status: 404});
         }

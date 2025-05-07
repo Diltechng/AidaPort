@@ -43,8 +43,8 @@ export default function BlogPage() {
 
     const formatDate = (dateString?: string) => {
         if (!dateString) return "Unknown date";
-        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString(undefined, options);
+       // const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date().toLocaleString('en-US', { timeZone: 'UTC' })
     };
 
     // Animation variants
