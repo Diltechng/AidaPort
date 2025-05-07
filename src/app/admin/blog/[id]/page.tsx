@@ -1,5 +1,13 @@
-export default function generateMetadata() {
-    return (
-       <div>hello</div>
-    );
+export default function Blogpage(){
+    return(
+        <section>
+            <div>
+                <form method="post" encType="">
+                    <input type="email" name="email" id="email" />
+                    <input type="password" name="password" id="password" />
+                    <input type="submit" placeholder="Login" />
+                </form>
+            </div>
+        </section>
+    )
 }
