@@ -1,5 +1,5 @@
-export default function generateMetadata({ params }: { params: { id: string } }) {
+export default function generateMetadata() {
     return (
-       <div>{params.id}</div>
+       <div>hello</div>
     );
 }
