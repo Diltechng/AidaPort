@@ -31,7 +31,7 @@ const Cta: React.FC = () => {
          {
             id: 3,
             name: "LinkedIn",
-            url: "https://linkedin.com/in/profile",
+            url: "https://linkedin.com/in/profile/abdulmumin-ibrahim-1b0a11199",
             style: "bg-gradient-to-br from-blue-600 to-blue-800",
             icon: <BiLogoLinkedin className="text-white" />,
          },

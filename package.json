@@ -13,6 +13,7 @@
     "@react-three/cannon": "^6.6.0",
     "@react-three/drei": "^10.0.0",
     "@react-three/fiber": "^9.0.4",
+    "@vercel/speed-insights": "^1.2.0",
     "aida_port": "file:",
     "cookies-next": "^5.1.0",
     "graphql": "^16.11.0",
